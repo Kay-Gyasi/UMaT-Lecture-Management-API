@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMSAPI", "LMSAPI\LMSAPI.csproj", "{5E472B30-50D3-4CE6-8C4A-59ECB0C59B7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMSData", "LMSData\LMSData.csproj", "{3842A2C5-FA80-49E2-9CDA-5DD049D53765}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F4B19FC8-D90A-4F4A-A0FB-02732C958177}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E472B30-50D3-4CE6-8C4A-59ECB0C59B7A}.LMS|Any CPU.ActiveCfg = LMS|Any CPU
+		{5E472B30-50D3-4CE6-8C4A-59ECB0C59B7A}.LMS|Any CPU.Build.0 = LMS|Any CPU
+		{3842A2C5-FA80-49E2-9CDA-5DD049D53765}.LMS|Any CPU.ActiveCfg = LMS|Any CPU
+		{3842A2C5-FA80-49E2-9CDA-5DD049D53765}.LMS|Any CPU.Build.0 = LMS|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		LMS|Any CPU = LMS|Any CPU
+	EndGlobalSection
+EndGlobal

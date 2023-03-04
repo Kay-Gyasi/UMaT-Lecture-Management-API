@@ -1,0 +1,17 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Storage;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+global using LMSData.Base;
+global using LMSData.Classes;
+global using LMSData.Courses;
+global using LMSData.Departments;
+global using LMSData.Lecturers;
+global using LMSData.Lectures;
+global using LMSData.Rooms;
+global using LMSData.Schedules;
