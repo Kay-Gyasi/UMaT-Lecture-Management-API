@@ -1,7 +1,15 @@
 ﻿global using LMSAPI;
-global using LMSAPI.Middlewares;
 global using Serilog;
 global using Serilog.Events;
 global using LMSData.Exceptions;
 global using Microsoft.AspNetCore.Mvc;
+global using LMSData.CourseSections;
+global using LMSData.CourseSessions;
+global using Controller = LMSAPI.Base.Controller;
+global using LMSAPI.Authentication;
+global using Swashbuckle.AspNetCore.SwaggerGen;
+global using LMSAPI.Base;
 global using LMSData;
+global using LMSAPI.Timetable.Generator;
+global using LMSData.Activities;
+global using LMSData.Courses;

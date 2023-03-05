@@ -1,20 +1,19 @@
-﻿using System.Reflection;
-using LMSAPI.Authentication;
+﻿using LMSAPI.Helpers;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace LMSAPI;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection RegisterServices(this IServiceCollection services,
+    public static void RegisterServices(this IServiceCollection services,
         IConfiguration configuration)
     {
         services.InstallDefaults()
             .InstallSwagger()
+            .InstallProcessors()
             .AddPersistence(configuration)
-            .AddAuthenticationService(configuration);
-        return services;
+            .AddAuthenticationService(configuration)
+            .AddScoped<ExcelReader>();
     }
 
     private static IServiceCollection InstallDefaults(this IServiceCollection services)
@@ -64,6 +63,19 @@ public static class DependencyInjection
             // var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             // options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
+        return services;
+    }
+
+    private static IServiceCollection InstallProcessors(this IServiceCollection services)
+    {
+        var processors = typeof(ProcessorAttribute).Assembly.DefinedTypes
+            .Where(x => x.CustomAttributes.Any(a => 
+                a.AttributeType == typeof(ProcessorAttribute)));
+        
+        foreach (var processor in processors)
+        {
+            services.AddScoped(processor);
+        }
         return services;
     }
 }

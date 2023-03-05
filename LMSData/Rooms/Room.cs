@@ -1,4 +1,6 @@
-﻿namespace LMSData.Rooms;
+﻿using LMSData.CourseSessions;
+
+namespace LMSData.Rooms;
 
 public class Room : DomainEntity<int>
 {
@@ -11,8 +13,8 @@ public class Room : DomainEntity<int>
     public string Name { get; private set; }    
     public int Capacity { get; private set; }
 
-    private readonly List<Lecture> _lectures = new();
-    public IEnumerable<Lecture> Lectures => _lectures.AsReadOnly();
+    private readonly List<Session> _sessions = new();
+    public IEnumerable<Session> Sessions => _sessions.AsReadOnly();
 
     public static Room Create(string name, int capacity)
         => new Room(name, capacity);

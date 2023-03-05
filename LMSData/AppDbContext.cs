@@ -7,10 +7,11 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     public DbSet<Class> Classes { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Department> Departments { get; set; }
-    public DbSet<Lecture> Lectures { get; set; }
+    public DbSet<Session> Sessions { get; set; }
+    public DbSet<Section> Sections { get; set; }
+    public DbSet<Activity> Activities { get; set; }
     public DbSet<Lecturer> Lecturers { get; set; }
     public DbSet<Room> Rooms { get; set; }
-    public DbSet<Schedule> Schedules { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {

@@ -1,4 +1,6 @@
-﻿namespace LMSData.Courses;
+﻿using LMSData.Activities;
+
+namespace LMSData.Courses;
 
 public class Course : DomainEntity<int>
 {
@@ -8,22 +10,20 @@ public class Course : DomainEntity<int>
         Code = code;
     }
 
-    public int LecturerId { get; private set; }
     public int DepartmentId { get; private set; }
     public int CreditHours { get; private set; }
-    public int NoOfHoursPerWeek { get; private set; }
-    public int NoOfHoursForLabWorkPerWeek { get; private set; }
-    public int NoOfHoursForOnlineLecturePerWeek { get; private set; }
     public string Name { get; private set; }
     public string Code { get; private set; }
+    public Semester Term { get; private set; }
     public string? Description { get; private set; }
-    public bool LabWorkIncluded { get; private set; }
-    public bool OnlineLectureIncluded { get; private set; }
-    public Lecturer? Lecturer { get; private set; }
     public Department? Department { get; private set; }
     
-    private readonly List<Lecture> _lectures = new();
-    public IEnumerable<Lecture> Lectures => _lectures.AsReadOnly();
+    private readonly List<Activity> _activities = new();
+    public IEnumerable<Activity> Activities => _activities.AsReadOnly();
+    
+    private readonly List<Class> _classes = new();
+    public IEnumerable<Class> Classes => _classes.AsReadOnly();
+
 
     public static Course Create(string name, string code) 
         => new Course(name, code);
@@ -46,12 +46,6 @@ public class Course : DomainEntity<int>
         return this;
     }
 
-    public Course IsTaughtBy(int lecturerId)
-    {
-        LecturerId = lecturerId;
-        return this;
-    }
-
     /// <summary>
     /// Department to which course belongs
     /// </summary>
@@ -68,39 +62,10 @@ public class Course : DomainEntity<int>
         CreditHours = creditHours;
         return this;
     }
+}
 
-    /// <summary>
-    /// Number of hours to be taught in a week
-    /// </summary>
-    /// <param name="noOfHoursPerWeek"></param>
-    /// <returns></returns>
-    public Course ToBeTaughtFor(int noOfHoursPerWeek)
-    {
-        NoOfHoursPerWeek = noOfHoursPerWeek;
-        return this;
-    }
-
-    /// <summary>
-    /// Indicates if course has a part to be taken in the lab
-    /// </summary>
-    /// <param name="noOfHours">No. of hours a week for lab work</param>
-    /// <returns></returns>
-    public Course HasLabWork(int noOfHours = 1)
-    {
-        LabWorkIncluded = true;
-        NoOfHoursForLabWorkPerWeek = noOfHours;
-        return this;
-    }
-    
-    /// <summary>
-    /// Indicates if course has online lectures
-    /// </summary>
-    /// <param name="noOfHours">No. of hours a week for online lectures</param>
-    /// <returns></returns>
-    public Course HasOnlineLectures(int noOfHours = 1)
-    {
-        OnlineLectureIncluded = true;
-        NoOfHoursForOnlineLecturePerWeek = noOfHours;
-        return this;
-    }
+public enum Semester
+{
+    First = 1,
+    Second
 }

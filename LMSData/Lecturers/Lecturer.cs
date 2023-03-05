@@ -16,12 +16,9 @@ public class Lecturer : DomainEntity<int>
     public int UserId { get; private set; }
     public User User { get; private set; }
     
-    private readonly List<Lecture> _lectures = new();
-    public IEnumerable<Lecture> Lectures => _lectures.AsReadOnly();
-
-    private readonly List<Course> _courses = new();
-    public IEnumerable<Course> Courses => _courses.AsReadOnly();
-
+    private readonly List<Section> _sections = new();
+    public IEnumerable<Section> Sections => _sections.AsReadOnly();
+    
     public static Lecturer Create(int userId)
         => new Lecturer(userId);
 

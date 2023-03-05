@@ -1,3 +1,5 @@
+using LMSAPI.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 var logger = new LoggerConfiguration()
     .MinimumLevel.Information()

@@ -2,36 +2,28 @@
 
 public class Class : DomainEntity<int>
 {
-    private Class(string name)
+    private Class(Level level, int departmentId)
     {
-        Name = name;
+        Level = level;
+        DepartmentId = departmentId;
     }
     
     public int DepartmentId { get; private set; }
-    public int? ScheduleId { get; private set; }
-    public string Name { get; private set; }
-    public bool IsLab { get; private set; }
+    public Level Level { get; set; }
     public Department? Department { get; private set; }
-    public Schedule? Schedule { get; private set; }
+    
+    private readonly List<Course> _courses = new();
+    public IEnumerable<Course> Courses => _courses.AsReadOnly();
 
-    public static Class Create(string name) 
-        => new Class(name);
 
-    public Class HasSchedule(int scheduleId)
-    {
-        ScheduleId = scheduleId;
-        return this;
-    }
+    public static Class Create(Level level, int departmentId) 
+        => new Class(level, departmentId);
+}
 
-    public Class IsIn(int departmentId)
-    {
-        DepartmentId = departmentId;
-        return this;
-    }
-
-    public Class AsLab()
-    {
-        IsLab = true;
-        return this;
-    }
+public enum Level
+{
+    One = 100,
+    Two = 200,
+    Three = 300,
+    Four = 400
 }
