@@ -2,21 +2,35 @@
 
 public class Section : DomainEntity<int>
 {
-    public Section()
+    private Section()
     {
         Activity = null;
         Type = SectionType.Discussion;
     }
 
-    public int ActivityId { get; set; }
-    public Activity Activity { get; set; }
-    public SectionType Type { get; set; }
+    public int ActivityId { get; private set; }
+    public SectionType Type { get; private set; }
+    public Activity Activity { get; private set; }
     
     private readonly List<Lecturer> _lecturers = new();
     public IEnumerable<Lecturer> Lecturers => _lecturers.AsReadOnly();
     
     private readonly List<Session> _sessions = new();
     public IEnumerable<Session> Sessions => _sessions.AsReadOnly();
+
+    public static Section Create() => new();
+
+    public Section OnActivity(int activityId)
+    {
+        ActivityId = activityId;
+        return this;
+    }
+
+    public Section OfType(SectionType type)
+    {
+        Type = type;
+        return this;
+    }
     
     /// <summary>
     /// Return the earliest session's start time
@@ -28,7 +42,7 @@ public class Section : DomainEntity<int>
             double minStartTime = 1000;
             foreach (Session session in Sessions)
             {
-                if (session.StartTime< minStartTime)
+                if (session.StartTime < minStartTime)
                     minStartTime = session.StartTime;
             }
             return minStartTime;
@@ -45,7 +59,7 @@ public class Section : DomainEntity<int>
             double maxEndTime = 0;
             foreach (Session session in Sessions)
             {
-                if (session.EndTime> maxEndTime)
+                if (session.EndTime > maxEndTime)
                     maxEndTime = session.EndTime;
             }
             return maxEndTime;

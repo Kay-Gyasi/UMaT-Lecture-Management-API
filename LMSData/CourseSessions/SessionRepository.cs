@@ -1,5 +1,6 @@
 ﻿namespace LMSData.CourseSessions;
 
+[Repository]
 public class SessionRepository : Repository<Session, int>, ISessionRepository
 {
     public SessionRepository(AppDbContext context, ILogger<Repository<Session, int>> logger) 

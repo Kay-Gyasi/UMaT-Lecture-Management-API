@@ -1,6 +1,4 @@
-﻿using LMSData.Activities;
-
-namespace LMSData.Courses;
+﻿namespace LMSData.Courses;
 
 public class Course : DomainEntity<int>
 {
@@ -10,6 +8,9 @@ public class Course : DomainEntity<int>
         Code = code;
     }
 
+    /// <summary>
+    /// The department that owns this course
+    /// </summary>
     public int DepartmentId { get; private set; }
     public int CreditHours { get; private set; }
     public string Name { get; private set; }
@@ -40,7 +41,7 @@ public class Course : DomainEntity<int>
         return this;
     }
 
-    public Course WithDescription(string desc)
+    public Course WithDescription(string? desc)
     {
         Description = desc;
         return this;

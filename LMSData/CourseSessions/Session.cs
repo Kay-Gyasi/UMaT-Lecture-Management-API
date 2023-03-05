@@ -2,27 +2,29 @@
 
 public class Session : DomainEntity<int>, IComparable
 {
-    public Session()
+    private Session(int sectionId, int roomId)
     {
+        SectionId = sectionId;
+        RoomId = roomId;
     }
 
-    public int SectionId { get; set; }
-    public Section Section { get; set; }
+    public int SectionId { get; private set; }
+    public Section Section { get; private set; }
 
-    public int RoomId { get; set; }
-    public Room Room { get; set; }
+    public int RoomId { get; private set; }
+    public Room Room { get; private set; }
     
     /// <summary>
     /// Get the compressed start time of this session 
     /// (this includes the weekday and 24-hr start time)
     /// </summary>
-    public double StartTimeWithWeekday { get; set; }
+    public double StartTimeWithWeekday { get; private set; }
 
     /// <summary>
     /// Get the compressed end time of this session 
     /// (this includes the weekday and 24-hr end time)
     /// </summary>
-    public double EndTimeWithWeekday { get; set; }
+    public double EndTimeWithWeekday { get; private set; }
 
     /// <summary>
     /// Get the 24-hr start time of this session
@@ -87,5 +89,30 @@ public class Session : DomainEntity<int>, IComparable
     public override string ToString()
     {
         return StartTimeWithWeekday + "-" + EndTimeWithWeekday;
+    }
+
+    public static Session Create(int sectionId, int roomId) => new Session(sectionId, roomId);
+
+    public Session ForSection(int sectionId)
+    {
+        SectionId = sectionId;
+        return this;
+    }
+
+    public Session ToBeHeldIn(int roomId)
+    {
+        RoomId = roomId;
+        return this;
+    }
+    public Session SetStartTimeWithWeekday(double startTimeWithWeekday)
+    {
+        StartTimeWithWeekday = startTimeWithWeekday;
+        return this;
+    }
+    
+    public Session SetEndTimeWithWeekday(double endTimeWithWeekday)
+    {
+        EndTimeWithWeekday = endTimeWithWeekday;
+        return this;
     }
 }

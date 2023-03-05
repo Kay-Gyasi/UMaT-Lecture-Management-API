@@ -30,4 +30,10 @@ public class Lecturer : DomainEntity<int>
         DepartmentId = departmentId;
         return this;
     }
+
+    public Lecturer IsUser(User? user)
+    {
+        User = user;
+        return this;
+    }
 }

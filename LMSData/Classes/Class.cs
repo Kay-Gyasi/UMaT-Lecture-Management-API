@@ -9,15 +9,26 @@ public class Class : DomainEntity<int>
     }
     
     public int DepartmentId { get; private set; }
-    public Level Level { get; set; }
+    public Level Level { get; private set; }
     public Department? Department { get; private set; }
     
     private readonly List<Course> _courses = new();
     public IEnumerable<Course> Courses => _courses.AsReadOnly();
-
-
+    
     public static Class Create(Level level, int departmentId) 
         => new Class(level, departmentId);
+
+    public Class InDepartment(int departmentId)
+    {
+        DepartmentId = departmentId;
+        return this;
+    }
+
+    public Class AtLevel(Level level)
+    {
+        Level = level;
+        return this;
+    }
 }
 
 public enum Level

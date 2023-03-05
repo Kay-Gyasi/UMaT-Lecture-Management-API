@@ -1,5 +1,6 @@
 ﻿namespace LMSData.Activities;
 
+[Repository]
 public class ActivityRepository : Repository<Activity, int>, IActivityRepository
 {
     public ActivityRepository(AppDbContext context, ILogger<Repository<Activity, int>> logger) 
