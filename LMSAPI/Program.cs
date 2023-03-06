@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 var logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .ReadFrom.Configuration(builder.Configuration)
-    .WriteTo.File("logs/logs.txt", LogEventLevel.Warning)
+    .WriteTo.File("_logs/logs.txt", LogEventLevel.Warning)
     .WriteTo.Console()
     .Enrich.FromLogContext()
     .CreateLogger();

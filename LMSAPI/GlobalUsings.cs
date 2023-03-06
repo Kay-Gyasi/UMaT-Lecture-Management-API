@@ -28,3 +28,5 @@ global using LMSData.Departments;
 global using LMSAPI.Users;
 global using LMSData.Lecturers;
 global using LMSData.Rooms;
+global using LMSAPI.Helpers;
+global using LMSData.Semesters;

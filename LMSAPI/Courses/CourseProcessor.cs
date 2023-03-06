@@ -1,12 +1,12 @@
 ﻿namespace LMSAPI.Courses;
 
-public record CourseCommand(int Id, int DepartmentId, int CreditHours, string Name, string Code, Semester Term,
+public record CourseCommand(int Id, int DepartmentId, int SemesterId, int CreditHours, string Name, string Code,
     string? Description);
 
-public record CourseDto(int Id, int DepartmentId, int CreditHours, string Name, string Code, Semester Term,
+public record CourseDto(int Id, int DepartmentId, int CreditHours, int SemesterId, string Name, string Code,
     string? Description, DepartmentDto? Department, IEnumerable<ActivityDto> Activities, IEnumerable<ClassDto> Classes);
 
-public record CoursePageDto(int Id, int DepartmentId, int CreditHours, string Name, string Code, Semester Term,
+public record CoursePageDto(int Id, int DepartmentId, int SemesterId, int CreditHours, string Name, string Code,
     string? Description, DepartmentDto? Department);
 
 [Processor]
@@ -29,7 +29,8 @@ public class CourseProcessor
             course = Course.Create(command.Name, command.Code);
             course.WithDescription(command.Description)
                 .BelongsTo(command.DepartmentId)
-                .HasCreditHours(command.CreditHours);
+                .HasCreditHours(command.CreditHours)
+                .ForSemester(command.SemesterId);
             await _courseRepository.AddAsync(course);
             return course.Id;
         }
@@ -41,7 +42,8 @@ public class CourseProcessor
             .WithCode(command.Code)
             .WithDescription(command.Description)
             .BelongsTo(command.DepartmentId)
-            .HasCreditHours(command.CreditHours);
+            .HasCreditHours(command.CreditHours)
+            .ForSemester(command.SemesterId);
         await _courseRepository.UpdateAsync(course);
         return course.Id;
     }

@@ -1,4 +1,6 @@
-﻿namespace LMSData.Courses;
+﻿using LMSData.Semesters;
+
+namespace LMSData.Courses;
 
 public class Course : DomainEntity<int>
 {
@@ -12,12 +14,13 @@ public class Course : DomainEntity<int>
     /// The department that owns this course
     /// </summary>
     public int DepartmentId { get; private set; }
+    public int SemesterId { get; private set; }
     public int CreditHours { get; private set; }
     public string Name { get; private set; }
     public string Code { get; private set; }
-    public Semester Term { get; private set; }
     public string? Description { get; private set; }
     public Department? Department { get; private set; }
+    public Semester? Semester { get; private set; }
     
     private readonly List<Activity> _activities = new();
     public IEnumerable<Activity> Activities => _activities.AsReadOnly();
@@ -58,15 +61,15 @@ public class Course : DomainEntity<int>
         return this;
     }
 
+    public Course ForSemester(int semesterId)
+    {
+        SemesterId = semesterId;
+        return this;
+    }
+
     public Course HasCreditHours(int creditHours)
     {
         CreditHours = creditHours;
         return this;
     }
-}
-
-public enum Semester
-{
-    First = 1,
-    Second
 }

@@ -7,6 +7,15 @@ public class RoomRepository : Repository<Room, int>, IRoomRepository
         : base(context, logger)
     {
     }
+
+
+    public async Task<bool> Exists(string name)
+    {
+        return await GetBaseQuery().AnyAsync(x => x.Name == name);
+    }
 }
 
-public interface IRoomRepository : IRepository<Room, int> { }
+public interface IRoomRepository : IRepository<Room, int>
+{
+    Task<bool> Exists(string name);
+}

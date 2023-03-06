@@ -4,6 +4,7 @@ using LMSData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LMSData.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230306134854_RoomLab")]
+    partial class RoomLab
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,9 +223,6 @@ namespace LMSData.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsLab")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsWorkshop")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -520,7 +520,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 543, DateTimeKind.Utc).AddTicks(8668));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 53, 958, DateTimeKind.Utc).AddTicks(2166));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -535,7 +535,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 544, DateTimeKind.Utc).AddTicks(1624));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 53, 958, DateTimeKind.Utc).AddTicks(4785));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -572,7 +572,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 580, DateTimeKind.Utc).AddTicks(4536));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 15, DateTimeKind.Utc).AddTicks(5002));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -587,7 +587,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 580, DateTimeKind.Utc).AddTicks(8381));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 15, DateTimeKind.Utc).AddTicks(8801));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -624,7 +624,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 619, DateTimeKind.Utc).AddTicks(8573));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 49, DateTimeKind.Utc).AddTicks(4904));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -639,7 +639,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 620, DateTimeKind.Utc).AddTicks(636));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 49, DateTimeKind.Utc).AddTicks(6071));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -682,7 +682,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 638, DateTimeKind.Utc).AddTicks(3619));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 60, DateTimeKind.Utc).AddTicks(2837));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -697,7 +697,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 638, DateTimeKind.Utc).AddTicks(5097));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 60, DateTimeKind.Utc).AddTicks(3987));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -742,7 +742,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 597, DateTimeKind.Utc).AddTicks(9165));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 36, DateTimeKind.Utc).AddTicks(6182));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -757,7 +757,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 598, DateTimeKind.Utc).AddTicks(1508));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 36, DateTimeKind.Utc).AddTicks(9904));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -790,7 +790,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 651, DateTimeKind.Utc).AddTicks(6571));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 69, DateTimeKind.Utc).AddTicks(3850));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -805,7 +805,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 651, DateTimeKind.Utc).AddTicks(9581));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 69, DateTimeKind.Utc).AddTicks(4807));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -846,7 +846,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 673, DateTimeKind.Utc).AddTicks(3383));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 80, DateTimeKind.Utc).AddTicks(4587));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -861,7 +861,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 673, DateTimeKind.Utc).AddTicks(5843));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 80, DateTimeKind.Utc).AddTicks(5421));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -892,7 +892,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 695, DateTimeKind.Utc).AddTicks(3031));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 95, DateTimeKind.Utc).AddTicks(6128));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -907,7 +907,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 695, DateTimeKind.Utc).AddTicks(6281));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 95, DateTimeKind.Utc).AddTicks(7698));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -936,7 +936,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 711, DateTimeKind.Utc).AddTicks(5445));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 105, DateTimeKind.Utc).AddTicks(7710));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -951,7 +951,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 711, DateTimeKind.Utc).AddTicks(9844));
+                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 48, 54, 105, DateTimeKind.Utc).AddTicks(9000));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()

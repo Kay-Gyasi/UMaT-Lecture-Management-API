@@ -57,19 +57,19 @@ public class YearlyTimetable : IUniversityTimetable
     /// <returns>True if the section is added; else false</returns>
     public bool AddSection(Section section)
     {
-        return AddSection(section, section.Activity.Course.Term);
+        return AddSection(section, section.Activity.Course.Semester?.Type);
     }
 
-    public bool AddSection(Section section, Semester term)
+    public bool AddSection(Section section, SemesterType? term)
     {
         switch (term)
         {
-            case Semester.First:
+            case SemesterType.First:
                 return semTimetable.AddSection(section);
-            case Semester.Second:
+            case SemesterType.Second:
                 return semTimetable.AddSection(section);
             default:
-                throw new NotImplementedException(section.Activity.Course.Term + " was not handled before! ");
+                throw new NotImplementedException(section.Activity.Course.Semester?.Type + " was not handled before! ");
         }
     }
 
@@ -100,14 +100,14 @@ public class YearlyTimetable : IUniversityTimetable
     /// <returns>True if the section fits in this timetable; else false</returns>
     public bool DoesSectionFit(Section section)
     {
-        switch (section.Activity.Course.Term)
+        switch (section.Activity.Course.Semester?.Type)
         {
-            case Semester.First:
+            case SemesterType.First:
                 return semTimetable.DoesSectionFit(section);
-            case Semester.Second:
+            case SemesterType.Second:
                 return semTimetable.DoesSectionFit(section);
             default:
-                throw new NotImplementedException(section.Activity.Course.Term + " was not handled before! ");
+                throw new NotImplementedException(section.Activity.Course.Semester?.Type + " was not handled before! ");
         }
     }
 

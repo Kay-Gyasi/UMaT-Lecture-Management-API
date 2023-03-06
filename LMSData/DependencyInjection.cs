@@ -18,7 +18,7 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("Default"));
-            options.EnableSensitiveDataLogging();
+            //options.EnableSensitiveDataLogging();
         });
 
         services.AddIdentityCore<User>()

@@ -20,7 +20,7 @@ public class SimplifiedYearlyTimetable
         foreach (Section section in existingTimetable.GetSemesterSections())
         foreach (Session session in section.Sessions)
         {
-            var term = session.Section.Activity.Course.Term;
+            var term = session.Section.Activity.Course.Semester?.Type;
             SimplifiedTimetableBlock block = new SimplifiedTimetableBlock(session, term);
             SemesterTimetableBlocks.Add(block);
         }

@@ -41,7 +41,7 @@ public class TimeTableProcessor
         // Get the courses from the database
         var activities = new List<Activity>();
         var classTo = await _classRepository.FindByIdAsync(request.ClassId);
-        foreach (var course in classTo!.Courses.Where(x => x.Term == request.Semester))
+        foreach (var course in classTo!.Courses.Where(x => x.Semester?.Id == request.SemesterId))
         {
             activities.AddRange(course.Activities);
         }

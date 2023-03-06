@@ -3,7 +3,8 @@ using LMSData.Helpers;
 
 namespace LMSData.Base;
 
-public class Repository<T, TKey> : IRepository<T, TKey> where T : DomainEntity<TKey>
+public class Repository<T, TKey> : IRepository<T, TKey>
+    where T : DomainEntity<TKey>
 {
     protected readonly AppDbContext Context;
     private readonly ILogger<Repository<T, TKey>> _logger;
@@ -118,6 +119,4 @@ public interface IRepository<T, TKey> where T : DomainEntity<TKey>
     Task UpdateAsync(T entity, bool saveChanges = true);  
     Task<T?> FindByIdAsync(int id);
     Task<PaginatedList<T>> GetPageAsync(PaginatedCommand command);
-    Task<bool> SaveChangesAsync();
-    Task<IDbContextTransaction> BeginTransaction();
 }

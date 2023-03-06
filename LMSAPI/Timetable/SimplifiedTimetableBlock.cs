@@ -1,6 +1,4 @@
-﻿using LMSData.Lecturers;
-
-namespace LMSAPI.Timetable;
+﻿namespace LMSAPI.Timetable;
 
 /// <summary>
 /// A class that represents a session for a timetable in a webpage
@@ -12,7 +10,7 @@ public class SimplifiedTimetableBlock
     /// </summary>
     /// <param name="session">The session</param>
     /// <param name="term">The term ('F', 'S', or 'Y')</param>
-    public SimplifiedTimetableBlock(Session session, Semester term)
+    public SimplifiedTimetableBlock(Session session, SemesterType? term)
     {
         CourseCode = session.Section.Activity.Course.Id.ToString();
 

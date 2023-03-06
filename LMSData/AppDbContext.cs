@@ -3,9 +3,11 @@
 public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
     public AppDbContext(DbContextOptions options) : base(options) { }
+    public AppDbContext() { }
 
     public DbSet<Class> Classes { get; set; }
     public DbSet<Course> Courses { get; set; }
+    public DbSet<Semester> Semesters { get; set; }
     public DbSet<Department> Departments { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<Section> Sections { get; set; }
@@ -13,16 +15,14 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     public DbSet<Lecturer> Lecturers { get; set; }
     public DbSet<Room> Rooms { get; set; }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
         foreach (var entry in ChangeTracker.Entries()
                      .Where(x => x.State is EntityState.Added or EntityState.Modified))
         {
-            if (entry.Entity is DomainEntity<int> entity)
-            {
-                entity.Audit ??= Audit.Create();
-                entity.Audit.WasUpdatedBy("admin");
-            }
+            if (entry.Entity is not DomainEntity<int> entity) continue;
+            entity.Audit ??= Audit.Create();
+            entity.Audit.WasUpdatedBy("admin");
         }
         
         foreach (var entry in ChangeTracker.Entries()
@@ -33,7 +33,7 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
             entity.Audit?.Delete();
         }
 
-        return base.SaveChangesAsync(cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
