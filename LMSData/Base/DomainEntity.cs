@@ -2,7 +2,7 @@
 
 public abstract class DomainEntity<TKey>
 {
-    public TKey Id { get; private set; }
+    public TKey Id { get; protected set; }
     public Audit? Audit { get; set; }
 
     public DomainEntity<TKey> HasId(TKey id)

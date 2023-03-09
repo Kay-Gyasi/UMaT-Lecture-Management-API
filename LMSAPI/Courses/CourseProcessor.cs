@@ -4,7 +4,7 @@ public record CourseCommand(int Id, int DepartmentId, int SemesterId, int Credit
     string? Description);
 
 public record CourseDto(int Id, int DepartmentId, int CreditHours, int SemesterId, string Name, string Code,
-    string? Description, DepartmentDto? Department, IEnumerable<ActivityDto> Activities, IEnumerable<ClassDto> Classes);
+    string? Description, DepartmentDto? Department, IEnumerable<ClassDto> Classes);
 
 public record CoursePageDto(int Id, int DepartmentId, int SemesterId, int CreditHours, string Name, string Code,
     string? Description, DepartmentDto? Department);

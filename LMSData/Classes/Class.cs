@@ -14,7 +14,7 @@ public class Class : DomainEntity<int>
     
     private readonly List<Course> _courses = new();
     public IEnumerable<Course> Courses => _courses.AsReadOnly();
-    
+
     public static Class Create(Level level, int departmentId) 
         => new Class(level, departmentId);
 

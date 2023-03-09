@@ -11,8 +11,8 @@ public sealed class User : IdentityUser<int>
     }
     
     public UserType Type { get; private set; }
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
+    public string? FirstName { get; private set; }
+    public string? LastName { get; private set; }
     public DateTime? DateOfBirth { get; private set; }
 
 
@@ -33,13 +33,13 @@ public sealed class User : IdentityUser<int>
         return this;
     }
 
-    public User HasFirstName(string firstname)
+    public User HasFirstName(string? firstname)
     {
         FirstName = firstname;
         return this;
     }
     
-    public User HasLastName(string lastname)
+    public User HasLastName(string? lastname)
     {
         LastName = lastname;
         return this;
@@ -68,5 +68,7 @@ public sealed class User : IdentityUser<int>
 public enum UserType
 {
     Lecturer = 1,
-    Student
+    Student,
+    Developer,
+    Admin
 }

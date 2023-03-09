@@ -1,9 +1,11 @@
-﻿namespace LMSAPI.Departments;
+﻿using LMSAPI.Users.Lecturers;
 
-public record DepartmentCommand(int Id, string Name);
-public record DepartmentDto(int Id, string Name, IEnumerable<LecturerDto> Lectures, 
+namespace LMSAPI.Departments;
+
+public record DepartmentCommand(int Id, string Name, string Code);
+public record DepartmentDto(int Id, string Name, string Code, IEnumerable<LecturerDto> Lectures, 
     IEnumerable<CourseDto> Courses, IEnumerable<Class> Classes);
-public record DepartmentPageDto(int Id, string Name);
+public record DepartmentPageDto(int Id, string Name, string Code);
 
 [Processor]
 public class DepartmentProcessor
@@ -22,7 +24,7 @@ public class DepartmentProcessor
 
         if (isNew)
         {
-            department = Department.Create(command.Name);
+            department = Department.Create(command.Name, command.Code);
             await _departmentRepository.AddAsync(department);
             return department.Id;
         }
@@ -30,7 +32,8 @@ public class DepartmentProcessor
         department = await _departmentRepository.FindByIdAsync(command.Id);
         if(department is null) throw new NullReferenceException();
 
-        department.HasName(command.Name);
+        department.HasName(command.Name)
+            .HasCode(command.Code);
         await _departmentRepository.UpdateAsync(department);
         return department.Id;
     }
@@ -48,6 +51,12 @@ public class DepartmentProcessor
         var page = await _departmentRepository.GetPageAsync(command);
         return page.Adapt<PaginatedList<DepartmentPageDto>>();
     }
+    
+    public async Task<bool> Exists(string code)
+    {
+        return await _departmentRepository.Exists(code);
+    }
+
 
     public async Task DeleteAsync(int id)
     {

@@ -119,4 +119,5 @@ public interface IRepository<T, TKey> where T : DomainEntity<TKey>
     Task UpdateAsync(T entity, bool saveChanges = true);  
     Task<T?> FindByIdAsync(int id);
     Task<PaginatedList<T>> GetPageAsync(PaginatedCommand command);
+    Task<IDbContextTransaction> BeginTransaction();
 }

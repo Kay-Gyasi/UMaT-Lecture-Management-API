@@ -23,7 +23,7 @@ public static class Configuration
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                options.DisplayOperationId();
+                //options.DisplayOperationId();
             });
         }
         

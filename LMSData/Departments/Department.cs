@@ -2,12 +2,14 @@
 
 public class Department : DomainEntity<int>
 {
-    private Department(string name)
+    private Department(string name, string code)
     {
         Name = name;
+        Code = code;
     }
 
     public string Name { get; private set; }
+    public string Code { get; private set; }
     
     private readonly List<Lecturer> _lecturers = new();
     public IEnumerable<Lecturer> Lectures => _lecturers.AsReadOnly();
@@ -18,12 +20,18 @@ public class Department : DomainEntity<int>
     private readonly List<Class> _classes = new();
     public IEnumerable<Class> Classes => _classes.AsReadOnly();
 
-    public static Department Create(string name) 
-        => new Department(name);
+    public static Department Create(string name, string code) 
+        => new Department(name, code);
 
     public Department HasName(string name)
     {
         Name = name;
+        return this;
+    }
+    
+    public Department HasCode(string code)
+    {
+        Code = code;
         return this;
     }
 }

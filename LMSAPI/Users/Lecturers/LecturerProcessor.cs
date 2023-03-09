@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace LMSAPI.Lecturers;
+namespace LMSAPI.Users.Lecturers;
 
-public record LecturerCommand(int Id, int DepartmentId, int UserId, UserCommand User);
+public record LecturerCommand(int Id, int? DepartmentId, int UserId, UserCommand? User);
 
-public record LecturerDto(int Id, int DepartmentId, int UserId, UserDto User, IEnumerable<Section> Sections);
+public record LecturerDto(int Id, int DepartmentId, int UserId, UserDto User);
 
 public record LecturerPageDto(int Id, int DepartmentId, int UserId, UserPageDto User);
 
@@ -27,8 +27,9 @@ public class LecturerProcessor
 
         if (isNew)
         {
-            lecturer = Lecturer.Create(User.Create(command.User.Type, command.User.FirstName, command.User.LastName))
+            lecturer = Lecturer.Create(command.UserId)
                 .BelongsTo(command.DepartmentId);
+                
             await _lecturerRepository.AddAsync(lecturer);
             return lecturer.Id;
         }
@@ -41,6 +42,13 @@ public class LecturerProcessor
 
         lecturer.IsUser(user)
             .BelongsTo(command.DepartmentId);
+        lecturer.User.WithEmail(command.User?.Email)
+            .WithPhone(command.User?.PhoneNumber)
+            .WasBornOn(command.User?.DateOfBirth)
+            .HasUserName(string.Join(" ", command.User?.FirstName, command.User?.LastName))
+            .HasFirstName(command.User?.FirstName)
+            .HasLastName(command.User?.LastName);
+
         await _lecturerRepository.UpdateAsync(lecturer);
         return lecturer.Id;
     }

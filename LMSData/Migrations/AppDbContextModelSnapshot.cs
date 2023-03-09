@@ -37,28 +37,6 @@ namespace LMSData.Migrations
                     b.ToTable("ClassCourse");
                 });
 
-            modelBuilder.Entity("LMSData.Activities.Activity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ActivityType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("Activities");
-                });
-
             modelBuilder.Entity("LMSData.Classes.Class", b =>
                 {
                     b.Property<int>("Id")
@@ -78,57 +56,6 @@ namespace LMSData.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Classes", (string)null);
-                });
-
-            modelBuilder.Entity("LMSData.CourseSections.Section", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActivityId");
-
-                    b.ToTable("Sections");
-                });
-
-            modelBuilder.Entity("LMSData.CourseSessions.Session", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("EndTimeWithWeekday")
-                        .HasColumnType("float");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SectionId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("StartTimeWithWeekday")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("SectionId");
-
-                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("LMSData.Courses.Course", b =>
@@ -152,6 +79,9 @@ namespace LMSData.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LecturerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -162,6 +92,8 @@ namespace LMSData.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("LecturerId");
 
                     b.HasIndex("SemesterId");
 
@@ -175,6 +107,10 @@ namespace LMSData.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -193,7 +129,7 @@ namespace LMSData.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -256,6 +192,29 @@ namespace LMSData.Migrations
                     b.ToTable("Semesters");
                 });
 
+            modelBuilder.Entity("LMSData.Students.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Students");
+                });
+
             modelBuilder.Entity("LMSData.User", b =>
                 {
                     b.Property<int>("Id")
@@ -282,12 +241,10 @@ namespace LMSData.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar");
 
@@ -339,21 +296,6 @@ namespace LMSData.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("LecturerSection", b =>
-                {
-                    b.Property<int>("LecturersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SectionsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LecturersId", "SectionsId");
-
-                    b.HasIndex("SectionsId");
-
-                    b.ToTable("LecturerSection");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -504,58 +446,6 @@ namespace LMSData.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LMSData.Activities.Activity", b =>
-                {
-                    b.HasOne("LMSData.Courses.Course", "Course")
-                        .WithMany("Activities")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("LMSData.Base.Audit", "Audit", b1 =>
-                        {
-                            b1.Property<int>("ActivityId")
-                                .HasColumnType("int");
-
-                            b1.Property<DateTime>("CreatedAt")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 543, DateTimeKind.Utc).AddTicks(8668));
-
-                            b1.Property<string>("CreatedBy")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(max)")
-                                .HasDefaultValue("admin");
-
-                            b1.Property<string>("Status")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime>("UpdatedAt")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 544, DateTimeKind.Utc).AddTicks(1624));
-
-                            b1.Property<string>("UpdatedBy")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(max)")
-                                .HasDefaultValue("admin");
-
-                            b1.HasKey("ActivityId");
-
-                            b1.ToTable("Activities");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ActivityId");
-                        });
-
-                    b.Navigation("Audit");
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("LMSData.Classes.Class", b =>
                 {
                     b.HasOne("LMSData.Departments.Department", "Department")
@@ -572,7 +462,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 580, DateTimeKind.Utc).AddTicks(4536));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 4, DateTimeKind.Utc).AddTicks(6863));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -587,7 +477,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 580, DateTimeKind.Utc).AddTicks(8381));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 4, DateTimeKind.Utc).AddTicks(9787));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -608,123 +498,17 @@ namespace LMSData.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("LMSData.CourseSections.Section", b =>
-                {
-                    b.HasOne("LMSData.Activities.Activity", "Activity")
-                        .WithMany("Sections")
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("LMSData.Base.Audit", "Audit", b1 =>
-                        {
-                            b1.Property<int>("SectionId")
-                                .HasColumnType("int");
-
-                            b1.Property<DateTime>("CreatedAt")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 619, DateTimeKind.Utc).AddTicks(8573));
-
-                            b1.Property<string>("CreatedBy")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(max)")
-                                .HasDefaultValue("admin");
-
-                            b1.Property<string>("Status")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime>("UpdatedAt")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 620, DateTimeKind.Utc).AddTicks(636));
-
-                            b1.Property<string>("UpdatedBy")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(max)")
-                                .HasDefaultValue("admin");
-
-                            b1.HasKey("SectionId");
-
-                            b1.ToTable("Sections");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SectionId");
-                        });
-
-                    b.Navigation("Activity");
-
-                    b.Navigation("Audit");
-                });
-
-            modelBuilder.Entity("LMSData.CourseSessions.Session", b =>
-                {
-                    b.HasOne("LMSData.Rooms.Room", "Room")
-                        .WithMany("Sessions")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LMSData.CourseSections.Section", "Section")
-                        .WithMany("Sessions")
-                        .HasForeignKey("SectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsOne("LMSData.Base.Audit", "Audit", b1 =>
-                        {
-                            b1.Property<int>("SessionId")
-                                .HasColumnType("int");
-
-                            b1.Property<DateTime>("CreatedAt")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 638, DateTimeKind.Utc).AddTicks(3619));
-
-                            b1.Property<string>("CreatedBy")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(max)")
-                                .HasDefaultValue("admin");
-
-                            b1.Property<string>("Status")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime>("UpdatedAt")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 638, DateTimeKind.Utc).AddTicks(5097));
-
-                            b1.Property<string>("UpdatedBy")
-                                .IsRequired()
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("nvarchar(max)")
-                                .HasDefaultValue("admin");
-
-                            b1.HasKey("SessionId");
-
-                            b1.ToTable("Sessions");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SessionId");
-                        });
-
-                    b.Navigation("Audit");
-
-                    b.Navigation("Room");
-
-                    b.Navigation("Section");
-                });
-
             modelBuilder.Entity("LMSData.Courses.Course", b =>
                 {
                     b.HasOne("LMSData.Departments.Department", "Department")
                         .WithMany("Courses")
                         .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LMSData.Lecturers.Lecturer", "Lecturer")
+                        .WithMany("Courses")
+                        .HasForeignKey("LecturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -742,7 +526,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 597, DateTimeKind.Utc).AddTicks(9165));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 66, DateTimeKind.Utc).AddTicks(5863));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -757,7 +541,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 598, DateTimeKind.Utc).AddTicks(1508));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 67, DateTimeKind.Utc).AddTicks(1752));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -777,6 +561,8 @@ namespace LMSData.Migrations
 
                     b.Navigation("Department");
 
+                    b.Navigation("Lecturer");
+
                     b.Navigation("Semester");
                 });
 
@@ -790,7 +576,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 651, DateTimeKind.Utc).AddTicks(6571));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 88, DateTimeKind.Utc).AddTicks(6333));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -805,7 +591,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 651, DateTimeKind.Utc).AddTicks(9581));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 89, DateTimeKind.Utc).AddTicks(3958));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -828,9 +614,7 @@ namespace LMSData.Migrations
                 {
                     b.HasOne("LMSData.Departments.Department", null)
                         .WithMany("Lectures")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("LMSData.User", "User")
                         .WithMany()
@@ -846,7 +630,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 673, DateTimeKind.Utc).AddTicks(3383));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 114, DateTimeKind.Utc).AddTicks(7630));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -861,7 +645,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 673, DateTimeKind.Utc).AddTicks(5843));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 115, DateTimeKind.Utc).AddTicks(1827));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -892,7 +676,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 695, DateTimeKind.Utc).AddTicks(3031));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 134, DateTimeKind.Utc).AddTicks(9025));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -907,7 +691,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 695, DateTimeKind.Utc).AddTicks(6281));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 135, DateTimeKind.Utc).AddTicks(859));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -936,7 +720,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("CreatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 711, DateTimeKind.Utc).AddTicks(5445));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 163, DateTimeKind.Utc).AddTicks(2656));
 
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
@@ -951,7 +735,7 @@ namespace LMSData.Migrations
                             b1.Property<DateTime>("UpdatedAt")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("datetime2")
-                                .HasDefaultValue(new DateTime(2023, 3, 6, 13, 54, 28, 711, DateTimeKind.Utc).AddTicks(9844));
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 163, DateTimeKind.Utc).AddTicks(5032));
 
                             b1.Property<string>("UpdatedBy")
                                 .IsRequired()
@@ -970,19 +754,62 @@ namespace LMSData.Migrations
                     b.Navigation("Audit");
                 });
 
-            modelBuilder.Entity("LecturerSection", b =>
+            modelBuilder.Entity("LMSData.Students.Student", b =>
                 {
-                    b.HasOne("LMSData.Lecturers.Lecturer", null)
+                    b.HasOne("LMSData.Classes.Class", "Class")
                         .WithMany()
-                        .HasForeignKey("LecturersId")
+                        .HasForeignKey("ClassId");
+
+                    b.HasOne("LMSData.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LMSData.CourseSections.Section", null)
-                        .WithMany()
-                        .HasForeignKey("SectionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.OwnsOne("LMSData.Base.Audit", "Audit", b1 =>
+                        {
+                            b1.Property<int>("StudentId")
+                                .HasColumnType("int");
+
+                            b1.Property<DateTime>("CreatedAt")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("datetime2")
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 181, DateTimeKind.Utc).AddTicks(5885));
+
+                            b1.Property<string>("CreatedBy")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("nvarchar(max)")
+                                .HasDefaultValue("admin");
+
+                            b1.Property<string>("Status")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTime>("UpdatedAt")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("datetime2")
+                                .HasDefaultValue(new DateTime(2023, 3, 9, 14, 20, 15, 181, DateTimeKind.Utc).AddTicks(8125));
+
+                            b1.Property<string>("UpdatedBy")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("nvarchar(max)")
+                                .HasDefaultValue("admin");
+
+                            b1.HasKey("StudentId");
+
+                            b1.ToTable("Students");
+
+                            b1.WithOwner()
+                                .HasForeignKey("StudentId");
+                        });
+
+                    b.Navigation("Audit");
+
+                    b.Navigation("Class");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -1036,21 +863,6 @@ namespace LMSData.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("LMSData.Activities.Activity", b =>
-                {
-                    b.Navigation("Sections");
-                });
-
-            modelBuilder.Entity("LMSData.CourseSections.Section", b =>
-                {
-                    b.Navigation("Sessions");
-                });
-
-            modelBuilder.Entity("LMSData.Courses.Course", b =>
-                {
-                    b.Navigation("Activities");
-                });
-
             modelBuilder.Entity("LMSData.Departments.Department", b =>
                 {
                     b.Navigation("Classes");
@@ -1060,9 +872,9 @@ namespace LMSData.Migrations
                     b.Navigation("Lectures");
                 });
 
-            modelBuilder.Entity("LMSData.Rooms.Room", b =>
+            modelBuilder.Entity("LMSData.Lecturers.Lecturer", b =>
                 {
-                    b.Navigation("Sessions");
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("LMSData.Semesters.Semester", b =>

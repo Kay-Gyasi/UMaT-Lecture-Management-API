@@ -1,11 +1,16 @@
-﻿using LMSData.Semesters;
-
-namespace LMSData.Courses;
+﻿namespace LMSData.Courses;
 
 public class Course : DomainEntity<int>
 {
     private Course(string name, string code)
     {
+        Name = name;
+        Code = code;
+    }
+    
+    private Course(int id, string name, string code)
+    {
+        Id = id;
         Name = name;
         Code = code;
     }
@@ -15,22 +20,23 @@ public class Course : DomainEntity<int>
     /// </summary>
     public int DepartmentId { get; private set; }
     public int SemesterId { get; private set; }
+    public int LecturerId { get; private set; }
     public int CreditHours { get; private set; }
     public string Name { get; private set; }
     public string Code { get; private set; }
     public string? Description { get; private set; }
     public Department? Department { get; private set; }
     public Semester? Semester { get; private set; }
-    
-    private readonly List<Activity> _activities = new();
-    public IEnumerable<Activity> Activities => _activities.AsReadOnly();
+    public Lecturer? Lecturer { get; private set; }
     
     private readonly List<Class> _classes = new();
     public IEnumerable<Class> Classes => _classes.AsReadOnly();
 
-
     public static Course Create(string name, string code) 
         => new Course(name, code);
+
+    public static Course Create(int id, string name, string code) 
+        => new Course(id, name, code);
 
     public Course WithName(string name)
     {

@@ -14,6 +14,4 @@ global using LMSData.Courses;
 global using LMSData.Departments;
 global using LMSData.Lecturers;
 global using LMSData.Rooms;
-global using LMSData.CourseSections;
-global using LMSData.Activities;
-global using LMSData.CourseSessions;
+global using LMSData.Students;

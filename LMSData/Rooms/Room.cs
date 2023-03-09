@@ -2,9 +2,13 @@
 
 public class Room : DomainEntity<int>
 {
+    // ID counter used to assign IDs automatically
+    private static int _nextRoomId = 0;
+
     private Room() { }
     private Room(string name, int? capacity)
     {
+        Id = _nextRoomId++;
         Name = name;
         Capacity = capacity;
     }
@@ -13,10 +17,7 @@ public class Room : DomainEntity<int>
     public int? Capacity { get; private set; }
     public bool IsLab { get; private set; }
     public bool IsWorkshop { get; private set; }
-
-    private readonly List<Session> _sessions = new();
-    public IEnumerable<Session> Sessions => _sessions.AsReadOnly();
-
+    
     public static Room Create(string name, int? capacity)
         => new Room(name, capacity);
 
@@ -43,4 +44,7 @@ public class Room : DomainEntity<int>
         IsWorkshop = true;
         return this;
     }
+    
+    // Restarts ID assigments
+    public static void RestartIDs() { _nextRoomId = 0; }
 }

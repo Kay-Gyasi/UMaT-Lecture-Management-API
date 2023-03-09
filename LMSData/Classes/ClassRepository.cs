@@ -10,8 +10,7 @@ public class ClassRepository : Repository<Class, int>, IClassRepository
     protected override IQueryable<Class> GetBaseQuery()
     {
         return base.GetBaseQuery()
-            .Include(x => x.Department)
-            .Include(x => x.Courses);
+            .Include(x => x.Department);
     }
 }
 

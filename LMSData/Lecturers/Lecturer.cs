@@ -12,12 +12,12 @@ public class Lecturer : DomainEntity<int>
         User = user;
     }
 
-    public int DepartmentId { get; private set; }
+    public int? DepartmentId { get; private set; }
     public int UserId { get; private set; }
     public User User { get; private set; }
     
-    private readonly List<Section> _sections = new();
-    public IEnumerable<Section> Sections => _sections.AsReadOnly();
+    private readonly List<Course> _courses = new();
+    public IEnumerable<Course> Courses => _courses.AsReadOnly();
     
     public static Lecturer Create(int userId)
         => new Lecturer(userId);
@@ -25,7 +25,7 @@ public class Lecturer : DomainEntity<int>
     public static Lecturer Create(User user)
         => new Lecturer(user);
 
-    public Lecturer BelongsTo(int departmentId)
+    public Lecturer BelongsTo(int? departmentId)
     {
         DepartmentId = departmentId;
         return this;
